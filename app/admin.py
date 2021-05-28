@@ -14,7 +14,7 @@ class ProductAdmin(TabbedTranslationAdmin):
 
 @admin.register(Description)
 class DescriptionAdmin(TabbedTranslationAdmin):
-    list_display = ('description', )
+    list_display = ('description', 'audio_file')
 
 
 admin.site.register(Favorite)

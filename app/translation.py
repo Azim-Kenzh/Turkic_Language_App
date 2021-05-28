@@ -16,4 +16,4 @@ class ProductTranslationOptions(TranslationOptions):
 
 @register(Description)
 class DescriptionTranslationOptions(TranslationOptions):
-    fields = ('description', )
+    fields = ('description', 'audio_file')

@@ -19,6 +19,7 @@ class WordSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['favorites'] = instance.favorites.filter(favorite=True).count()
+        representation['category'] = instance.category.title
         return representation
 
 
@@ -27,6 +28,11 @@ class DescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Description
         fields = '__all__'
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['word'] = instance.word.title
+        return representation
 
 
 class FavoriteSerializer(serializers.ModelSerializer):

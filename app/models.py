@@ -1,3 +1,4 @@
+
 from django.db import models
 
 from account.models import MyUser
@@ -35,7 +36,7 @@ class Description(models.Model):
     image = models.ImageField(upload_to='description', blank=True, null=True)
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
     description = models.TextField(verbose_name='Metin')
-
+    audio_file = models.FileField(upload_to='mp3')
 
 
 class Favorite(models.Model):
