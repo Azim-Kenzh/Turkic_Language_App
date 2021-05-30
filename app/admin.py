@@ -3,18 +3,18 @@ from modeltranslation.admin import TranslationAdmin, TabbedTranslationAdmin
 from .models import *
 
 @admin.register(Category)
-class CategoryAdmin(TabbedTranslationAdmin,):
+class CategoryAdmin(TranslationAdmin):
     list_display = ('title', 'slug')
 
 
 @admin.register(Word)
-class ProductAdmin(TabbedTranslationAdmin):
+class ProductAdmin(TranslationAdmin):
     list_display = ('title', )
 
 
 @admin.register(Description)
-class DescriptionAdmin(TabbedTranslationAdmin):
-    list_display = ('description', 'audio_file')
+class DescriptionAdmin(TranslationAdmin):
+    list_display = ('title', 'audio_file')
 
 
 admin.site.register(Favorite)

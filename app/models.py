@@ -31,11 +31,11 @@ class Word(models.Model):
 class Description(models.Model):
 
     class Meta:
-        verbose_name = 'Аçıklama'
+        verbose_name = 'Açıklama-Kelimesi'
 
     image = models.ImageField(upload_to='description', blank=True, null=True)
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
-    description = models.TextField(verbose_name='Metin')
+    title = models.CharField(max_length=200, verbose_name='Isim')
     audio_file = models.FileField(upload_to='mp3')
 
 
