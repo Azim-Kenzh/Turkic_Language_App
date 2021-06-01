@@ -10,7 +10,7 @@ class Category(models.Model):
         verbose_name = 'Kategoriler'
 
     image = models.ImageField(upload_to='category', blank=True, null=True)
-    title = models.CharField(max_length=200, verbose_name='Isim')
+    title = models.CharField(max_length=200, verbose_name='Isim', null='', blank='')
     slug = models.SlugField(max_length=200, unique=True)
 
     def __str__(self):
@@ -22,7 +22,7 @@ class Word(models.Model):
     class Meta:
         verbose_name = 'Kelimeler'
 
-    title = models.CharField(max_length=200, verbose_name='Isim')
+    title = models.CharField(max_length=200, verbose_name='Isim', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='kategori')
 
     def __str__(self):

@@ -7,7 +7,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = '__all__'
+        exclude = ('slug', "slug_tr", "slug_az", "slug_uz",
+                    "slug_kk", "slug_ug", "slug_tk", "slug_tt",
+                    "slug_ky", "slug_ksk", "slug_ba", "slug_cv",
+                    "slug_ash", "slug_kaa", "slug_krc", "slug_sah", "slug_ctt", "slug_alt",
+                    )
 
 
 class WordSerializer(serializers.ModelSerializer):
@@ -18,7 +22,6 @@ class WordSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['favorites'] = instance.favorites.filter(favorite=True).count()
         representation['category'] = instance.category.title
         return representation
 
@@ -58,7 +61,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         user = request.user
         word = validated_data.get('word')
-        favorite = Favorite.objects.get_or_create(author=user, word=word)[0]
+        favorite = Favorite.objects.get_or_create(user=user, word=word)[0]
         favorite.favorite = True if favorite.favorite == False else False
         favorite.save()
         return favorite

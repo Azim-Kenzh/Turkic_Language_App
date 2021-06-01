@@ -10,3 +10,4 @@ Pillow==8.0
 django-3-jet
 google-api-python-client==1.4.1
 python-decouple
+djoser
