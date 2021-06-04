@@ -7,23 +7,23 @@ from app.serializers import FavoriteSerializer
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=6, write_only=True)
-    password_confirm = serializers.CharField(min_length=6, write_only=True)
+    # password_confirm = serializers.CharField(min_length=6, write_only=True)
 
     class Meta:
         model = MyUser
-        fields = ('username', 'email', 'password', 'password_confirm')
+        fields = ('username', 'email', 'password')
 
     def validate_username(self, username):
         if MyUser.objects.filter(username=username).exists():
             raise serializers.ValidationError('Bu isimde bir kullanıcı var')
         return username
 
-    def validate(self, validate_data): # def validate - def clean, validate_data - clean_data
-        password = validate_data.get('password')
-        password_confirm = validate_data.get('password_confirm')
-        if password != password_confirm:
-            raise serializers.ValidationError('password do not match')
-        return validate_data
+    # def validate(self, validate_data): # def validate - def clean, validate_data - clean_data
+    #     password = validate_data.get('password')
+    #     password_confirm = validate_data.get('password_confirm')
+    #     if password != password_confirm:
+    #         raise serializers.ValidationError('password do not match')
+    #     return validate_data
 
     def create(self, validated_data):
         username = validated_data.get('username')
