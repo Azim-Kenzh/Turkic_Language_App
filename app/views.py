@@ -1,10 +1,14 @@
 from django.db.models import Q
 from rest_framework import generics, viewsets, mixins, status
 from rest_framework.decorators import action
+
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet
+
 from .serializers import *
+from .filters import WordFilter, DescriptionFilter
 
 
 class PermissionMixin:
@@ -28,11 +32,24 @@ class CategoryListView(generics.ListAPIView, viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [AllowAny, ]
 
+    """Поиск"""
+    @action(detail=False, methods=['get'])
+    def search(self, request, pk=None):
+        q = request.query_params.get('q')
+        queryset = self.get_queryset()
+        queryset = queryset.filter(Q(title__icontains=q))
+        serializer = CategorySerializer(queryset, many=True, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class WordViewSet(PermissionMixin, viewsets.ModelViewSet):
     queryset = Word.objects.all()
     serializer_class = WordSerializer
     permission_classes = [AllowAny, ]
+
+    """# / api / v1 / words /?category = 1"""
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = WordFilter
 
     """Поиск"""
     @action(detail=False, methods=['get'])
@@ -48,6 +65,10 @@ class DescriptionViewSet(PermissionMixin, viewsets.ModelViewSet):
     queryset = Description.objects.all()
     serializer_class = DescriptionSerializer
     permission_classes = [AllowAny, ]
+
+    """/ api / v1 / descriptions /?word = 1"""
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = DescriptionFilter
 
 
 

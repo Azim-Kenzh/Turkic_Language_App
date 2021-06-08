@@ -41,6 +41,16 @@ class LoginSerializer(serializers.Serializer):
         trim_whitespace=False
     )
 
+    class Meta:
+        model = MyUser
+        fields = ('username', 'email')
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['username'] = instance.username.username
+        return representation
+
+
     def validate(self, validate_data):
         username = validate_data.get('username')
         password = validate_data.get('password')

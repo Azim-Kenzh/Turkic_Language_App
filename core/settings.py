@@ -47,6 +47,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'django_filters',
+    # 'oauth2_provider',
+    # 'social_django',
+    # 'rest_framework_social_oauth2',
 
     'account',
     'app',
@@ -266,6 +270,7 @@ AUTH_USER_MODEL = 'account.MyUser'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     ],
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -303,8 +308,17 @@ JET_THEMES = [
     }
 ]
 
+# AUTHENTICATION_BACKENDS = (
+#     'social_core.backends.facebook.FacebookOAuth2',
+#     'rest_framework_social_oauth2.backends.DjangoOAuth2',
+#     'django.contrib.auth.backends.ModelBackend',
+# )
+
 JET_SIDE_MENU_COMPACT = True
 JET_CHANGE_FORM_SIBLING_LINKS = True
 JET_INDEX_DASHBOARD  = 'jet.dashboard.dashboard.DefaultIndexDashboard'
 JET_APP_INDEX_DASHBOARD  = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
 
+#
+# SOCIAL_AUTH_FACEBOOK_KEY = '548199803012414'
+# SOCIAL_AUTH_FACEBOOK_SECRET = '108b27e1dd72d39437b80b7c70e7eae7'
