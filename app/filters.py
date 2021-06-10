@@ -1,6 +1,5 @@
-from django_filters.rest_framework import DjangoFilterBackend, filters
 from django_filters import FilterSet
-# from rest_framework import filters
+from django_filters import rest_framework as filters
 
 from .models import Word, Description
 

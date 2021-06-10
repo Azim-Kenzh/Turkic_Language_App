@@ -1,11 +1,7 @@
-from django.db.models import Q
-from rest_framework import generics, viewsets, mixins, status
-from rest_framework.decorators import action
 
+from rest_framework import generics, viewsets, mixins, filters
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
-from rest_framework.response import Response
-
-from django_filters.rest_framework import DjangoFilterBackend, FilterSet
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import *
 from .filters import WordFilter, DescriptionFilter
@@ -31,15 +27,8 @@ class CategoryListView(generics.ListAPIView, viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [AllowAny, ]
-
-    """Поиск"""
-    @action(detail=False, methods=['get'])
-    def search(self, request, pk=None):
-        q = request.query_params.get('q')
-        queryset = self.get_queryset()
-        queryset = queryset.filter(Q(title__icontains=q))
-        serializer = CategorySerializer(queryset, many=True, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    search_fields = ['title', ]
 
 
 class WordViewSet(PermissionMixin, viewsets.ModelViewSet):
@@ -47,18 +36,11 @@ class WordViewSet(PermissionMixin, viewsets.ModelViewSet):
     serializer_class = WordSerializer
     permission_classes = [AllowAny, ]
 
-    """# / api / v1 / words /?category = 1"""
-    filter_backends = (DjangoFilterBackend,)
+    """# /api/v1/words/?category = id DjangoFilterBackend"""
+    """/api/v1/words/?search= str filters.SearchFilter"""
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     filter_class = WordFilter
-
-    """Поиск"""
-    @action(detail=False, methods=['get'])
-    def search(self, request, pk=None):
-        q = request.query_params.get('q')
-        queryset = self.get_queryset()
-        queryset = queryset.filter(Q(title__icontains=q))
-        serializer = WordSerializer(queryset, many=True, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    search_fields = ['title', ]
 
 
 class DescriptionViewSet(PermissionMixin, viewsets.ModelViewSet):
@@ -69,7 +51,6 @@ class DescriptionViewSet(PermissionMixin, viewsets.ModelViewSet):
     """/ api / v1 / descriptions /?word = 1"""
     filter_backends = (DjangoFilterBackend,)
     filter_class = DescriptionFilter
-
 
 
 class FavoriteViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
