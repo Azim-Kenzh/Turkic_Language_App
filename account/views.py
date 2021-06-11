@@ -5,8 +5,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from account import models, serializers
 from account.models import MyUser
-from account.serializers import RegisterSerializer, LoginSerializer, UserSerializer
+from account.serializers import RegisterSerializer, UserSerializer
+
 
 
 class RegisterView(APIView):
@@ -20,9 +22,30 @@ class RegisterView(APIView):
 
 
 class LoginView(ObtainAuthToken):
-    serializer_class = LoginSerializer
-    queryset = MyUser.objects.all()
-    permission_classes = [AllowAny, ]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'username': user.username,
+            'email': user.email,
+            'languages': user.languages,
+        })
+
+
+
+    # def post(self, request):
+    #     serializer = serializers.LoginSerializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     username = serializer.validated_data['username']
+    #     info = models.User.objects.get(username=username)
+    #     serializer1 = serializers.UserSerializer(info, many=True)
+    #     token, created = Token.objects.get_or_create(username=username)
+    #     return Response({"token": token.key, 'data': serializer1.data}, status=200)
 
 
 class LogoutView(APIView):

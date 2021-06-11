@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from account.models import *
 from app.serializers import FavoriteSerializer
@@ -33,44 +34,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=200)
-    password = serializers.CharField(
-        label='Password',
-        style={'input_type': 'password'},
-        trim_whitespace=False
-    )
-
-    class Meta:
-        model = MyUser
-        fields = ('username', 'email')
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['username'] = instance.username.username
-        return representation
-
-
-    def validate(self, validate_data):
-        username = validate_data.get('username')
-        password = validate_data.get('password')
-
-        if username and password:
-            user = authenticate(request=self.context.get('request'), username=username, password=password)
-            if not user:
-                raise serializers.ValidationError('Kullanıcı kayıt olamaz')
-        else:
-            raise serializers.ValidationError('"Giriş" ve "şifre" belirtmelisiniz!')
-
-        validate_data['user'] = user
-        return validate_data
-
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MyUser
-        fields = ('username', 'email')
+        fields = ('id', 'username', 'email')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -79,3 +47,29 @@ class UserSerializer(serializers.ModelSerializer):
             representation['favorites'] = FavoriteSerializer(instance.favorites.filter(favorite=True),
                                                              many=True, context=self.context).data
         return representation
+
+
+# class LoginSerializer(serializers.ModelSerializer):
+#     pass
+
+    # print('d12')
+    # class Meta:
+    #     models = MyUser
+    #     fields = ('username', 'password', 'languages')
+    #
+    # def validate(self, validate_data):
+    #     username = validate_data.get('username')
+    #     password = validate_data.get('password')
+    #     languages = validate_data.get('languages')
+    #     print(languages)
+    #     if username and password:
+    #         user = authenticate(request=self.context.get('request'), username=username, password=password, languages=languages)
+    #         if not user:
+    #             raise serializers.ValidationError('Kullanıcı kayıt olamaz')
+    #     else:
+    #         raise serializers.ValidationError('"Giriş" ve "şifre" belirtmelisiniz!')
+    #     validate_data['user'] = user
+    #     print('Hi')
+    #     return validate_data
+
+
