@@ -7,11 +7,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        exclude = ('title', 'title_ru', 'slug', 'slug_ru', "slug_tr", "slug_az", "slug_uz",
-                    "slug_kk", "slug_ug", "slug_tk", "slug_tt",
-                    "slug_ky", "slug_ksk", "slug_ba", "slug_cv",
-                    "slug_ash", "slug_kaa", "slug_krc", "slug_sah", "slug_ctt", "slug_alt",
-                    )
+        exclude = ('title', 'title_ru')
 
 
 class WordSerializer(serializers.ModelSerializer):
