@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'tr'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -225,6 +225,7 @@ django.conf.locale.LANG_INFO = LANG_INFO
 
 
 LANGUAGES = (
+    ('ru', gettext('Russian')),
     ('tr', gettext('Turkish')),
     ('az', gettext('Azeri')),
     ('uz', gettext('Uzbek')),
@@ -244,7 +245,7 @@ LANGUAGES = (
     ('alt', gettext('Altaic')),
 )
 
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'tr'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ky'
 
 MODELTRANSLATION_TRANSLATION_FILES = (
     'app.translation',

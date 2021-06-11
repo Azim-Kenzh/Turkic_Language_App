@@ -14,8 +14,8 @@ class WordFilter(FilterSet):
 
 
 class DescriptionFilter(FilterSet):
-    word = filters.CharFilter('word')
+    category = filters.CharFilter('category')
 
     class Meta:
         models = Description
-        fields = ('word', )
+        fields = ('category', )

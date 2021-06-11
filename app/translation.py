@@ -5,7 +5,7 @@ from .models import *
 
 @register(Category)
 class CategoryTranslationOptions(TranslationOptions):
-    fields = ('title', 'slug')
+    fields = ('title', )
     # empty_values = {'slug': None}
 
 

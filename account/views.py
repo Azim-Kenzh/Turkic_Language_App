@@ -18,7 +18,7 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response('Başarıyla kayıt oldunuz!', status=status.HTTP_201_CREATED)
+            return Response('Вы успешно зарегистрировались!', status=status.HTTP_201_CREATED)
 
 
 class LoginView(ObtainAuthToken):
@@ -33,7 +33,7 @@ class LoginView(ObtainAuthToken):
             'user_id': user.pk,
             'username': user.username,
             'email': user.email,
-            'languages': user.languages,
+            'languages': user.languages[1::1],
         })
 
 
@@ -54,7 +54,7 @@ class LogoutView(APIView):
     def post(self, request):
         user = request.user
         Token.objects.filter(user=user).delete()
-        return Response('Başarılı çıkış!', status=status.HTTP_200_OK)
+        return Response('успешно вышли из системы', status=status.HTTP_200_OK)
 
 #
 class UserViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):

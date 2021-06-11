@@ -16,7 +16,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate_username(self, username):
         if MyUser.objects.filter(username=username).exists():
-            raise serializers.ValidationError('Bu isimde bir kullanıcı var')
+            raise serializers.ValidationError('Есть пользователь с таким именем')
         return username
 
     def validate(self, validate_data): # def validate - def clean, validate_data - clean_data

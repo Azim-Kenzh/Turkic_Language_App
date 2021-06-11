@@ -4,16 +4,19 @@ from .models import *
 
 @admin.register(Category)
 class CategoryAdmin(TranslationAdmin):
-    list_display = ('id', 'title', 'slug')
+    exclude = ('title_ru', )
+    list_display = ('id', 'title')
     list_filter = ('title', )
 
 @admin.register(Word)
 class ProductAdmin(TranslationAdmin):
+    exclude = ('title_ru',)
     list_display = ('id', 'title', )
     list_filter = ('title', )
 
 @admin.register(Description)
 class DescriptionAdmin(TranslationAdmin):
+    exclude = ('title_ru', 'audio_file_ru')
     list_display = ('id', 'title', 'audio_file')
     list_filter = ('title', )
 
