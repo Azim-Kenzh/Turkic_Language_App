@@ -11,7 +11,6 @@ class MyUser(AbstractUser):
     #     models.CharField(choices=settings.LANGUAGES, max_length=222)
     # )
     languages = list(settings.LANGUAGES)
-
     is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'username'

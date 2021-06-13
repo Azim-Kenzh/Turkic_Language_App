@@ -14,7 +14,7 @@ class WordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Word
-        fields = '__all__'
+        exclude = ('title', 'title_ru')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -31,6 +31,7 @@ class DescriptionSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['word'] = instance.word.title
+        representation['category'] = instance.category.title
         return representation
 
 
