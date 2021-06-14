@@ -49,8 +49,9 @@ class DescriptionViewSet(PermissionMixin, viewsets.ModelViewSet):
     permission_classes = [AllowAny, ]
 
     """/ api / v1 / descriptions /?word = 1"""
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     filter_class = DescriptionFilter
+    search_fields = ['title', ]
 
 
 class FavoriteViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):

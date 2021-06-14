@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
@@ -44,12 +45,15 @@ urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('admin/', admin.site.urls),
-    path('api/v1/docs/', schema_view.with_ui()),
-    path('api/v1/', include(router.urls)),
-    path('api/v1/accounts/', include("account.urls")),
-    path('api/v1/i18n/', include('django.conf.urls.i18n')),
+    path('docs/', schema_view.with_ui()),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
+
+urlpatterns += i18n_patterns(
+    path('', include(router.urls)),
+    path('accounts/', include("account.urls")),
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

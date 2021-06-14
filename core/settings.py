@@ -241,7 +241,7 @@ LANGUAGES = (
     ('kaa', gettext('Kara-Kalpak')),
     ('krc', gettext('Karachay-Balkar')),
     ('sah', gettext('Yakut')),
-    ('ctt', gettext('Crimean-Tatar')),
+    ('crh', gettext('Crimean-Tatar')),
     ('alt', gettext('Altaic')),
 )
 
@@ -253,7 +253,7 @@ MODELTRANSLATION_TRANSLATION_FILES = (
 
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale/'),
+    os.path.join(BASE_DIR, 'locale'),
 )
 
 
