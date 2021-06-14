@@ -47,12 +47,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', schema_view.with_ui()),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('accounts/', include("account.urls")),
 ]
 
 
 urlpatterns += i18n_patterns(
     path('', include(router.urls)),
-    path('accounts/', include("account.urls")),
 )
 
 if settings.DEBUG:
