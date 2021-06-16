@@ -41,6 +41,8 @@ schema_view = get_schema_view(
     public=True,
 )
 
+
+
 urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),

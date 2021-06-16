@@ -82,8 +82,8 @@ class UserMe(APIView):
     def get(self, request, format=None):
         return Response(self.serializer_class(request.user).data)
 
-    def put(self, request, format=None):
-        serializer = self.serializer_class(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        return Response(user.username)
+    # def put(self, request, format=None):
+    #     serializer = self.serializer_class(data=request.data, context={'request': request})
+    #     serializer.is_valid(raise_exception=True)
+    #     user = serializer.validated_data['user']
+    #     return Response(user.username)

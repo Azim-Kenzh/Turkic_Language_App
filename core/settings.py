@@ -48,13 +48,21 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'django_filters',
-    # 'oauth2_provider',
-    # 'social_django',
-    # 'rest_framework_social_oauth2',
+
+    #auth google
+    # 'django.contrib.sites',
+    #
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount'
+    # 'allauth.socialaccount.providers.google',
+
 
     'account',
     'app',
 ]
+
+# SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -312,11 +320,26 @@ JET_THEMES = [
     }
 ]
 
-# AUTHENTICATION_BACKENDS = (
-#     'social_core.backends.facebook.FacebookOAuth2',
-#     'rest_framework_social_oauth2.backends.DjangoOAuth2',
+# AUTHENTICATION_BACKENDS = [
+#     # Needed to login by username in Django admin, regardless of `allauth`
 #     'django.contrib.auth.backends.ModelBackend',
-# )
+#
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '123',
+#             'secret': '456',
+#             'key': ''
+#         }
+#     }
+# }
 
 JET_SIDE_MENU_COMPACT = True
 JET_CHANGE_FORM_SIBLING_LINKS = True

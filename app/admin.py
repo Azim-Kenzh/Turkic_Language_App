@@ -16,8 +16,8 @@ class ProductAdmin(TranslationAdmin):
 
 @admin.register(Description)
 class DescriptionAdmin(TranslationAdmin):
-    exclude = ('title_ru', 'audio_file_ru')
-    list_display = ('id', 'title', 'audio_file')
+    exclude = ('title_ru', 'audio_file_ru', 'images_ru')
+    list_display = ('id', 'title', 'audio_file', 'images')
     list_filter = ('title', )
 
 

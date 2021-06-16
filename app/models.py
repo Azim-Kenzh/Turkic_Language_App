@@ -37,6 +37,7 @@ class Description(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, verbose_name='Слово')
+    images = models.ImageField(upload_to='descriptions_country', blank=True, null=True)
     audio_file = models.FileField(upload_to='mp3')
 
     def __str__(self):
