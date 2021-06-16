@@ -193,7 +193,7 @@ EXTRA_LANG_INFO = {
         'name': 'Avshar',
         'name_local': 'Avshar', #unicode codepoints here
     },
-    'ctt': {
+    'crh': {
         'bidi': False, # right-to-left
         'code': 'ctt',
         'name': 'Crimean-Tatar',

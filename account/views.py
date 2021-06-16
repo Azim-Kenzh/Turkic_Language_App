@@ -1,3 +1,4 @@
+
 from rest_framework import status, mixins, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -72,3 +73,17 @@ class UserViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.Destr
 
     def get_serializer_context(self):
         return {'request': self.request, 'action': self.action}
+
+
+class UserMe(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
+
+    def get(self, request, format=None):
+        return Response(self.serializer_class(request.user).data)
+
+    def put(self, request, format=None):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        return Response(user.username)
