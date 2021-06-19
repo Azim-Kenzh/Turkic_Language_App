@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from core.settings import LANGUAGES, LANGUAGES_FLAGS
 from .models import *
 
 
@@ -7,58 +8,39 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        exclude = ('title', 'title_ru')
-
-
-class WordSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Word
-        exclude = ('title', 'title_ru')
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['category'] = instance.category.title
-        return representation
-
+        fields = '__all__'
 
 class DescriptionSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Description
-        exclude = ('title', 'title_ru', 'audio_file', 'audio_file_ru')
+        fields = ('image',)
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['word'] = instance.word.title
         representation['category'] = instance.category.title
+        languages_list = []
+        for language in LANGUAGES:
+            language = language[0]
+            a = {}
+            a[f'title_{language}'] = getattr(instance, f'title_{language}')
+            a[f'image_{language}'] = self.context.get('request').build_absolute_uri(LANGUAGES_FLAGS.get(language)[1])
+            a[f'language_{language}'] = LANGUAGES_FLAGS.get(language)[0]
+            a[f'audio_file_{language}'] =self.context.get('request').build_absolute_uri(getattr(instance, f'audio_file_{language}').url) if getattr(instance, f'audio_file_{language}') else None
+            languages_list.append(a)
+            # representation[language] = a
+        representation['languages'] = languages_list
         return representation
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
-        fields = ('word', 'user', 'favorite')
+        fields = ('description',)
 
-    def get_fields(self):
-        action = self.context.get('action')
-        fields = super().get_fields()
-        if action == 'create':
-            fields.pop('user')
-            fields.pop('favorite')
-        return fields
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['user'] = instance.user.username
-        representation['word'] = instance.word.title
+        representation['description'] = instance.description.title
         return representation
 
-    def create(self, validated_data):
-        request = self.context.get('request')
-        user = request.user
-        word = validated_data.get('word')
-        favorite = Favorite.objects.get_or_create(user=user, word=word)[0]
-        favorite.favorite = True if favorite.favorite == False else False
-        favorite.save()
-        return favorite

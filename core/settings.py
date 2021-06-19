@@ -49,15 +49,6 @@ INSTALLED_APPS = [
     'djoser',
     'django_filters',
 
-    #auth google
-    # 'django.contrib.sites',
-    #
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount'
-    # 'allauth.socialaccount.providers.google',
-
-
     'account',
     'app',
 ]
@@ -148,79 +139,79 @@ gettext = lambda s: s
 
 EXTRA_LANG_INFO = {
     'ky': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'ky',
         'name': 'Kyrgyz',
-        'name_local': 'Кыргыз тили', #unicode codepoints here
+        'name_local': 'Кыргыз тили',
     },
     'ug': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'ug',
         'name': 'Uighur',
-        'name_local': 'Uygurçi', #unicode codepoints here
+        'name_local': 'Uygurçi',
     },
     'ba': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'ba',
         'name': 'Bashkir',
-        'name_local': 'Bashkir', #unicode codepoints here
+        'name_local': 'Bashkir',
     },
     'cv': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'cv',
         'name': 'Chuvash',
-        'name_local': 'Chuvash', #unicode codepoints here
+        'name_local': 'Chuvash',
     },
     'kaa': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'kaa',
         'name': 'Kara-Kalpak',
-        'name_local': 'Kara-Kalpak', #unicode codepoints here
+        'name_local': 'Kara-Kalpak',
     },
     'krc': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'krc',
         'name': 'Karachay-Balkar',
-        'name_local': 'Karachay-Balkar', #unicode codepoints here
+        'name_local': 'Karachay-Balkar',
     },
     'sah': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'sah',
         'name': 'Yakut',
-        'name_local': 'Yakut', #unicode codepoints here
+        'name_local': 'Yakut',
     },
     'alt': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'alt',
         'name': 'Altaic',
-        'name_local': 'Altaic', #unicode codepoints here
+        'name_local': 'Altaic',
     },
     'ash': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'ash',
         'name': 'Avshar',
-        'name_local': 'Avshar', #unicode codepoints here
+        'name_local': 'Avshar',
     },
     'crh': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'ctt',
         'name': 'Crimean-Tatar',
-        'name_local': 'Кырым татар теле', #unicode codepoints here
+        'name_local': 'Кырым татар теле',
     },
     'ksk': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'ksk',
         'name': 'Kashkay',
-        'name_local': 'Kashkay', #unicode codepoints here
+        'name_local': 'Kashkay',
     },
     'uz': {
-        'bidi': False, # right-to-left
+        'bidi': False,
         'code': 'uz',
         'name': 'Uzbek',
-        'name_local': "O'zbek tili", #unicode codepoints here
+        'name_local': "O'zbek tili",
     },
     'tk': {
-        'bidi': False,  # right-to-left
+        'bidi': False,
         'code': 'tk',
         'name': 'Turkmen',
         'name_local': 'Türkmen dili',  # unicode codepoints here
@@ -233,7 +224,7 @@ django.conf.locale.LANG_INFO = LANG_INFO
 
 
 LANGUAGES = (
-    ('ru', gettext('Russian')),
+    # ('ru', gettext('Russian')),
     ('tr', gettext('Turkish')),
     ('az', gettext('Azeri')),
     ('uz', gettext('Uzbek')),
@@ -252,6 +243,29 @@ LANGUAGES = (
     ('crh', gettext('Crimean-Tatar')),
     ('alt', gettext('Altaic')),
 )
+
+LANGUAGES_FLAGS = {
+    # 'ru': ('Русский','/core/static/ru.png'),
+    'tr': ('Türkçe','/core/static/tr.png'),
+    'az': ('Azərbaycan','/core/static/az.png'),
+    'uz': ("O'zbek", '/core/static/uz.png'),
+    'kk': ('Казакша', '/core/static/kk.png'),
+    'ug': ('Uygurçi', '/core/static/ug.png'),
+    'tk': ('Türkmen', '/core/static/tk.png'),
+    'tt': ('Татар телендә', '/core/static/tt.png'),
+    'ky': ('Кыргызча', '/core/static/ky.png'),
+    'ksk': ('Turkish', '/core/static/ksk.png'),
+    'ba': ('Turkish', '/core/static/ba.png'),
+    'cv': ('Turkish', '/core/static/cv.png'),
+    'ash': ('Turkish', '/core/static/ash.png'),
+    'kaa': ('Turkish', '/core/static/kaa.png'),
+    'krc': ('Turkish', '/core/static/krc.png'),
+    'sah': ('Turkish', '/core/static/sah.png'),
+    'crh': ('Turkish', '/core/static/crh.png'),
+    'alt': ('Turkish', '/core/static/alt.png'),
+}
+
+
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'ky'
 
@@ -283,15 +297,15 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
-]
+    ]
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 JET_THEMES = [
     {
-        'theme': 'default', # theme folder name
-        'color': '#47bac1', # color of the theme's button in user menu
-        'title': 'Default' # theme title
+        'theme': 'default',
+        'color': '#47bac1',
+        'title': 'Default'
     },
     {
         'theme': 'green',
@@ -343,8 +357,8 @@ JET_THEMES = [
 
 JET_SIDE_MENU_COMPACT = True
 JET_CHANGE_FORM_SIBLING_LINKS = True
-JET_INDEX_DASHBOARD  = 'jet.dashboard.dashboard.DefaultIndexDashboard'
-JET_APP_INDEX_DASHBOARD  = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
+JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
+JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
 
 #
 # SOCIAL_AUTH_FACEBOOK_KEY = '548199803012414'

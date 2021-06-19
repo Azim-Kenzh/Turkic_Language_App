@@ -1,16 +1,7 @@
 from django_filters import FilterSet
 from django_filters import rest_framework as filters
 
-from .models import Word, Description
-
-
-class WordFilter(FilterSet):
-    """Filter for an category"""
-    category = filters.CharFilter('category')
-
-    class Meta:
-        models = Word
-        fields = ('category', )
+from .models import Description
 
 
 class DescriptionFilter(FilterSet):

@@ -34,44 +34,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-
-
 class UserSerializer(serializers.ModelSerializer):
+    favorites = FavoriteSerializer(many=True)
 
     class Meta:
         model = MyUser
-        fields = ('id', 'username', 'email')
+        fields = ('id', 'image', 'username', 'email', 'favorites')
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        action = self.context.get('action')
-        if action == 'retrieve':
-            representation['favorites'] = FavoriteSerializer(instance.favorites.filter(favorite=True),
-                                                             many=True, context=self.context).data
-        return representation
-
-
-# class LoginSerializer(serializers.ModelSerializer):
-#     pass
-
-    # print('d12')
-    # class Meta:
-    #     models = MyUser
-    #     fields = ('username', 'password', 'languages')
-    #
-    # def validate(self, validate_data):
-    #     username = validate_data.get('username')
-    #     password = validate_data.get('password')
-    #     languages = validate_data.get('languages')
-    #     print(languages)
-    #     if username and password:
-    #         user = authenticate(request=self.context.get('request'), username=username, password=password, languages=languages)
-    #         if not user:
-    #             raise serializers.ValidationError('Kullanıcı kayıt olamaz')
-    #     else:
-    #         raise serializers.ValidationError('"Giriş" ve "şifre" belirtmelisiniz!')
-    #     validate_data['user'] = user
-    #     print('Hi')
-    #     return validate_data
 
 

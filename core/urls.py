@@ -23,12 +23,11 @@ from rest_framework.routers import DefaultRouter
 from django.conf import settings
 
 from account.views import UserViewSet
-from app.views import CategoryListView, WordViewSet, FavoriteViewSet, DescriptionViewSet
+from app.views import CategoryListView, FavoriteViewSet, DescriptionViewSet
 
 router = DefaultRouter()
 router.register('users', UserViewSet)
 router.register('category', CategoryListView)
-router.register('words', WordViewSet)
 router.register('descriptions', DescriptionViewSet)
 router.register('favorites', FavoriteViewSet)
 
