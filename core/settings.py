@@ -245,24 +245,24 @@ LANGUAGES = (
 )
 
 LANGUAGES_FLAGS = {
-    # 'ru': ('Русский','/core/static/ru.png'),
-    'tr': ('Türkçe','/media/static/tr.jpg'),
-    'az': ('Azərbaycan','/media/static/az.jpg'),
-    'uz': ("O'zbek", '/media/static/uz.jpg'),
-    'kk': ('Казакша', '/media/static/kk.jpg'),
-    'ug': ('Uygurçi', '/media/static/ug.jpg'),
-    'tk': ('Türkmen', '/media/static/tk.jpg'),
-    'tt': ('Татар телендә', '/media/static/tt.jpg'),
-    'ky': ('Кыргызча', '/media/static/ky.jpg'),
-    'ksk': ('Turkish', '/media/static/ksk.jpg'),
-    'ba': ('Turkish', '/media/static/ba.jpg'),
-    'cv': ('Turkish', '/media/static/cv.jpg'),
-    'ash': ('Turkish', '/media/static/ash.jpg'),
-    'kaa': ('Turkish', '/media/static/kaa.jpg'),
-    'krc': ('Turkish', '/media/static/krc.jpg'),
-    'sah': ('Turkish', '/media/static/sah.jpg'),
-    'crh': ('Turkish', '/media/static/crh.jpg'),
-    'alt': ('Turkish', '/media/static/alt.jpg'),
+    # 'ru': ('Русский','/core/flags/ru.png'),
+    'tr': ('Türkçe','/core/flags/tr.jpg'),
+    'az': ('Azərbaycan','/core/flags/az.jpg'),
+    'uz': ("O'zbek", '/core/flags/uz.jpg'),
+    'kk': ('Казакша', '/core/flags/kk.jpg'),
+    'ug': ('Uygurçi', '/core/flags/ug.jpg'),
+    'tk': ('Türkmen', '/core/flags/tk.jpg'),
+    'tt': ('Татар телендә', '/core/flags/tt.jpg'),
+    'ky': ('Кыргызча', '/core/flags/ky.jpg'),
+    'ksk': ('Turkish', '/core/flags/ksk.jpg'),
+    'ba': ('Turkish', '/core/flags/ba.jpg'),
+    'cv': ('Turkish', '/core/flags/cv.jpg'),
+    'ash': ('Turkish', '/core/flags/ash.jpg'),
+    'kaa': ('Turkish', '/core/flags/kaa.jpg'),
+    'krc': ('Turkish', '/core/flags/krc.jpg'),
+    'sah': ('Turkish', '/core/flags/sah.jpg'),
+    'crh': ('Turkish', '/core/flags/crh.jpg'),
+    'alt': ('Turkish', '/core/flags/alt.jpg'),
 }
 
 
@@ -282,8 +282,8 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '../media/static')
+STATIC_URL = '/flags/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'flags')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
