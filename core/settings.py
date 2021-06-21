@@ -246,23 +246,23 @@ LANGUAGES = (
 
 LANGUAGES_FLAGS = {
     # 'ru': ('Русский','/core/flags/ru.png'),
-    'tr': ('Türkçe','/core/flags/tr.jpg'),
-    'az': ('Azərbaycan','/core/flags/az.jpg'),
-    'uz': ("O'zbek", '/core/flags/uz.jpg'),
-    'kk': ('Казакша', '/core/flags/kk.jpg'),
-    'ug': ('Uygurçi', '/core/flags/ug.jpg'),
-    'tk': ('Türkmen', '/core/flags/tk.jpg'),
-    'tt': ('Татар телендә', '/core/flags/tt.jpg'),
-    'ky': ('Кыргызча', '/core/flags/ky.jpg'),
-    'ksk': ('Turkish', '/core/flags/ksk.jpg'),
-    'ba': ('Turkish', '/core/flags/ba.jpg'),
-    'cv': ('Turkish', '/core/flags/cv.jpg'),
-    'ash': ('Turkish', '/core/flags/ash.jpg'),
-    'kaa': ('Turkish', '/core/flags/kaa.jpg'),
-    'krc': ('Turkish', '/core/flags/krc.jpg'),
-    'sah': ('Turkish', '/core/flags/sah.jpg'),
-    'crh': ('Turkish', '/core/flags/crh.jpg'),
-    'alt': ('Turkish', '/core/flags/alt.jpg'),
+    'tr': ('Türkçe','/media/flags/tr.jpg'),
+    'az': ('Azərbaycan','/media/flags/az.jpg'),
+    'uz': ("O'zbek", '/media/flags/uz.jpg'),
+    'kk': ('Казакша', '/media/flags/kk.jpg'),
+    'ug': ('Uygurçi', '/media/flags/ug.jpg'),
+    'tk': ('Türkmen', '/media/flags/tk.jpg'),
+    'tt': ('Татар телендә', '/media/flags/tt.jpg'),
+    'ky': ('Кыргызча', '/media/flags/ky.jpg'),
+    'ksk': ('Turkish', '/media/flags/ksk.jpg'),
+    'ba': ('Turkish', '/media/flags/ba.jpg'),
+    'cv': ('Turkish', '/media/flags/cv.jpg'),
+    'ash': ('Turkish', '/media/flags/ash.jpg'),
+    'kaa': ('Turkish', '/media/flags/kaa.jpg'),
+    'krc': ('Turkish', '/media/flags/krc.jpg'),
+    'sah': ('Turkish', '/media/flags/sah.jpg'),
+    'crh': ('Turkish', '/media/flags/crh.jpg'),
+    'alt': ('Turkish', '/media/flags/alt.jpg'),
 }
 
 
@@ -282,8 +282,8 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/flags/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'flags')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
