@@ -246,23 +246,23 @@ LANGUAGES = (
 
 LANGUAGES_FLAGS = {
     # 'ru': ('Русский','/core/static/ru.png'),
-    'tr': ('Türkçe','/core/static/tr.png'),
-    'az': ('Azərbaycan','/core/static/az.png'),
-    'uz': ("O'zbek", '/core/static/uz.png'),
-    'kk': ('Казакша', '/core/static/kk.png'),
-    'ug': ('Uygurçi', '/core/static/ug.png'),
-    'tk': ('Türkmen', '/core/static/tk.png'),
-    'tt': ('Татар телендә', '/core/static/tt.png'),
-    'ky': ('Кыргызча', '/core/static/ky.png'),
-    'ksk': ('Turkish', '/core/static/ksk.png'),
-    'ba': ('Turkish', '/core/static/ba.png'),
-    'cv': ('Turkish', '/core/static/cv.png'),
-    'ash': ('Turkish', '/core/static/ash.png'),
-    'kaa': ('Turkish', '/core/static/kaa.png'),
-    'krc': ('Turkish', '/core/static/krc.png'),
-    'sah': ('Turkish', '/core/static/sah.png'),
-    'crh': ('Turkish', '/core/static/crh.png'),
-    'alt': ('Turkish', '/core/static/alt.png'),
+    'tr': ('Türkçe','/media/static/tr.jpg'),
+    'az': ('Azərbaycan','/media/static/az.jpg'),
+    'uz': ("O'zbek", '/media/static/uz.jpg'),
+    'kk': ('Казакша', '/media/static/kk.jpg'),
+    'ug': ('Uygurçi', '/media/static/ug.jpg'),
+    'tk': ('Türkmen', '/media/static/tk.jpg'),
+    'tt': ('Татар телендә', '/media/static/tt.jpg'),
+    'ky': ('Кыргызча', '/media/static/ky.jpg'),
+    'ksk': ('Turkish', '/media/static/ksk.jpg'),
+    'ba': ('Turkish', '/media/static/ba.jpg'),
+    'cv': ('Turkish', '/media/static/cv.jpg'),
+    'ash': ('Turkish', '/media/static/ash.jpg'),
+    'kaa': ('Turkish', '/media/static/kaa.jpg'),
+    'krc': ('Turkish', '/media/static/krc.jpg'),
+    'sah': ('Turkish', '/media/static/sah.jpg'),
+    'crh': ('Turkish', '/media/static/crh.jpg'),
+    'alt': ('Turkish', '/media/static/alt.jpg'),
 }
 
 
@@ -283,7 +283,7 @@ LOCALE_PATHS = (
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, '../media/static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

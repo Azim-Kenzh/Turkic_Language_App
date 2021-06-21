@@ -35,7 +35,7 @@ class DescriptionSerializer(serializers.ModelSerializer):
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
-        fields = ('description',)
+        fields = ('description', 'id')
 
 
     def to_representation(self, instance):

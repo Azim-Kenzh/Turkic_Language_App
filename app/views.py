@@ -1,4 +1,3 @@
-
 from rest_framework import generics, viewsets, mixins, filters, status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
@@ -63,3 +62,4 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
