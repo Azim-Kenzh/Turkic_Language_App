@@ -10,3 +10,4 @@ class DescriptionFilter(FilterSet):
     class Meta:
         models = Description
         fields = ('category', )
+

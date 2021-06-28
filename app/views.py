@@ -54,6 +54,10 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     serializer_class = FavoriteSerializer
     permission_classes = [IsAuthenticated, ]
 
+    """/ api / v1 / descriptions /?search = asd.."""
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    search_fields = ['description__title', ]
+
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
 
