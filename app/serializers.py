@@ -59,6 +59,6 @@ class FavoriteSerializer(serializers.ModelSerializer):
         if favorite:
             favorite.delete()
         else:
-            return Favorite.objects.get_or_create(user=user, description=description)[0]
+            return Favorite.objects.get_or_create(user=user, description=description, favorite=True)[0]
         return favorite
 
