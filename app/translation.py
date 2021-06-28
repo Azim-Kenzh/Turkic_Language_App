@@ -10,3 +10,4 @@ class CategoryTranslationOptions(TranslationOptions):
 @register(Description)
 class DescriptionTranslationOptions(TranslationOptions):
     fields = ('title', 'audio_file')
+

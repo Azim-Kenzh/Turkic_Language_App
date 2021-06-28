@@ -37,6 +37,7 @@ class Favorite(models.Model):
 
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='favorites')
     description = models.ForeignKey(Description, on_delete=models.CASCADE, related_name='favorites')
+    favorite = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.__str__()

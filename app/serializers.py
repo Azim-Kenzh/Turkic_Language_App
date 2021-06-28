@@ -13,7 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class DescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Description
-        fields = ('image',)
+        fields = ('id', 'image')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -33,14 +33,32 @@ class DescriptionSerializer(serializers.ModelSerializer):
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Favorite
-        fields = ('description', 'id')
+        fields = ('id', 'favorite', 'description')
 
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['user'] = instance.user.username
+        # representation['user'] = instance.user.username
         representation['description'] = instance.description.title
+        representation['description_id'] = instance.description.id
+        representation['category'] = instance.description.category.title
+        # representation['image'] = instance.description.image
+
+
         return representation
+
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        user = request.user
+        description = validated_data.get('description')
+        favorite = Favorite.objects.filter(user=user, description=description).first()
+        if favorite:
+            favorite.delete()
+        else:
+            return Favorite.objects.get_or_create(user=user, description=description)[0]
+        return favorite
 
