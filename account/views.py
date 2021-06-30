@@ -8,8 +8,7 @@ from rest_framework.views import APIView
 
 # from account import models, serializers
 from account.models import MyUser
-from account.serializers import RegisterSerializer, UserSerializer
-
+from account.serializers import RegisterSerializer, UserSerializer, UserUpdateSerializer
 
 
 class RegisterView(APIView):
@@ -36,8 +35,6 @@ class LoginView(ObtainAuthToken):
             'email': user.email,
         })
 
-
-
     # def post(self, request):
     #     serializer = serializers.LoginSerializer(data=request.data)
     #     serializer.is_valid(raise_exception=True)
@@ -56,7 +53,7 @@ class LogoutView(APIView):
         Token.objects.filter(user=user).delete()
         return Response('успешно вышли из системы', status=status.HTTP_200_OK)
 
-#
+
 class UserViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
     queryset = MyUser.objects.all()
     serializer_class = UserSerializer
@@ -80,11 +77,19 @@ class UserMe(APIView):
     serializer_class = UserSerializer
 
     def get(self, request, format=None):
-        return Response(self.serializer_class(request.user).data)
+        return Response(self.serializer_class(request.user, context={"request": request}).data)
 
-    def update(self, request, *args, **kwargs):
-        username = request.user.username
-        return  Response(self.serializer_class(request.user).data)
+    # def update(self, request, *args, **kwargs):
+    #     username = request.user.username
+    #     return Response(self.serializer_class(request.user).data)
+
+    def patch(self, request, *args, **kwargs):
+        instance = self.request.user
+        serializer = UserUpdateSerializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(self.serializer_class(request.user, context={"request": request}).data)
 
     # def put(self, request, format=None):
     #     serializer = self.serializer_class(data=request.data, context={'request': request})

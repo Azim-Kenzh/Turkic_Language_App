@@ -62,8 +62,8 @@ class FavoriteSerializer(serializers.ModelSerializer):
     #     # representation['user'] = instance.user.username
     #     representation['category_name'] = instance.description.category.title
     #     representation['category_id'] = instance.description.category.id
-        # representation['words'] = DescriptionInlineSerializer(Favorite.objects.filter(description__category_id=instance.description.category_id).values('description'), many=True, context=self.context).data
-        # return representation
+    #     # representation['words'] = DescriptionInlineSerializer(Favorite.objects.filter(description__category_id=instance.description.category_id).values('description'), many=True, context=self.context).data
+    #     return representation
 
 
     def create(self, validated_data):

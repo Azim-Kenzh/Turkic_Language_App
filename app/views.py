@@ -1,7 +1,7 @@
 from itertools import groupby
 from pprint import pprint
 
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, Q
 from rest_framework import generics, viewsets, mixins, filters, status
 from rest_framework.decorators import api_view, action, permission_classes
 from rest_framework.generics import get_object_or_404
@@ -67,7 +67,6 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     serializer_class = FavoriteSerializer
     permission_classes = [IsAuthenticated, ]
 
-
     """/ api / v1 / descriptions /?search = asd.."""
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     search_fields = ['description__title', 'description__category']
@@ -83,7 +82,11 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def list(self, request, *args, **kwargs):
-        queryset = list(self.get_queryset().select_related('description', 'description__category'))
+        search = request.query_params.get('search')
+        queryset = self.get_queryset().select_related('description', 'description__category')
+        if search:
+            queryset = queryset.filter(description__title__icontains=search)
+        queryset = list(queryset)
         grouped_iterator = groupby(queryset, lambda x: (x.description.category_id, x.description.category.title))
         data = {}
 

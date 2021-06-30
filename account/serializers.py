@@ -35,16 +35,23 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    favorites = FavoriteSerializer(many=True)
+    # favorites = FavoriteSerializer(many=True)
 
     class Meta:
         model = MyUser
-        fields = ('id', 'image', 'username', 'email', 'favorites')
+        fields = ('id', 'image', 'username', 'email')
 
-    def update(self, instance, validated_data):
-        instance.username = validated_data.get('username', instance.username,)
-        print('instance of username', instance.username)
-        return instance
+    # def update(self, instance, validated_data):
+    #     instance.username = validated_data.get('username', instance.username,)
+    #     print('instance of username', instance.username)
+    #     return instance
 
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    # favorites = FavoriteSerializer(many=True)
+
+    class Meta:
+        model = MyUser
+        fields = ('image', 'username')
 
 
