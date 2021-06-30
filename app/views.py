@@ -1,9 +1,14 @@
+from itertools import groupby
+from pprint import pprint
+
+from django.db.models import Exists, OuterRef
 from rest_framework import generics, viewsets, mixins, filters, status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from social_core.pipeline import user
 
 from .serializers import *
 from .filters import DescriptionFilter
@@ -48,14 +53,23 @@ class DescriptionViewSet(PermissionMixin, viewsets.ModelViewSet):
         context['request'] = self.request
         return context
 
+    def get_queryset(self):
+        queryset = self.filter_queryset(self.queryset)
+        favorites = Favorite.objects.select_related('user', 'description').\
+            filter(user=self.request.user, description_id=OuterRef('pk'))
+        queryset = queryset.annotate(favorite=Exists(favorites))
+        return queryset
+
 
 class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
     permission_classes = [IsAuthenticated, ]
 
+
     """/ api / v1 / descriptions /?search = asd.."""
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    # filter_class = Favoriteilter
     search_fields = ['description__title', ]
 
     def get_queryset(self):
@@ -67,3 +81,18 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+    def list(self, request, *args, **kwargs):
+        queryset = list(self.get_queryset().select_related('description', 'description__category'))
+        grouped_iterator = groupby(queryset, lambda x: (x.description.category_id, x.description.category.title))
+        data = {}
+
+        for k, v in grouped_iterator:
+            if data.get(k, None):
+                data[k].append(*list(v))
+            else:
+                data[k] = list(v)
+        new_data = []
+        for k, v in data.items():
+            new_data.append({'category_id': k[0], 'category_title': k[1], 'words': DescriptionInlineSerializer(list(map(lambda x: x.description, v)), many=True).data})
+
+        return Response(new_data)

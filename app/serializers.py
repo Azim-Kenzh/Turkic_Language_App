@@ -10,10 +10,27 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
-class DescriptionSerializer(serializers.ModelSerializer):
+
+class DescriptionInlineSerializer(serializers.ModelSerializer):
+    favorite = serializers.BooleanField(default=True)
+
     class Meta:
         model = Description
-        fields = ('id', 'image')
+        fields = ('id', 'image', 'title', 'favorite')
+
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     # representation['user'] = instance.user.username
+    #     representation['description_id'] = instance.title.id
+    #     return representation
+
+
+class DescriptionSerializer(serializers.ModelSerializer):
+    favorite = serializers.BooleanField(read_only=True, default=False)
+
+    class Meta:
+        model = Description
+        fields = ('id', 'image', 'favorite')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -42,12 +59,9 @@ class FavoriteSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         # representation['user'] = instance.user.username
-        representation['description'] = instance.description.title
-        representation['description_id'] = instance.description.id
-        representation['category'] = instance.description.category.title
-        # representation['image'] = instance.description.image
-
-
+        representation['category_name'] = instance.description.category.title
+        representation['category_id'] = instance.description.category.id
+        # representation['words'] = DescriptionInlineSerializer(Favorite.objects.filter(description__category_id=instance.description.category_id).values('description'), many=True, context=self.context).data
         return representation
 
 

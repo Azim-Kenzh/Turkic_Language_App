@@ -41,5 +41,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = MyUser
         fields = ('id', 'image', 'username', 'email', 'favorites')
 
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username,)
+        print('instance of username', instance.username)
+        return instance
+
 
 

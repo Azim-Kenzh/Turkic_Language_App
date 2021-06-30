@@ -1,7 +1,7 @@
 from django_filters import FilterSet
 from django_filters import rest_framework as filters
 
-from .models import Description
+from .models import Description, Favorite
 
 
 class DescriptionFilter(FilterSet):
@@ -10,4 +10,13 @@ class DescriptionFilter(FilterSet):
     class Meta:
         models = Description
         fields = ('category', )
+
+
+# class FavoriteFilter(FilterSet):
+#     description , category = filters.CharFilter('category')
+#
+#     class Meta:
+#         models = Description
+#         fields = ('category',)
+
 

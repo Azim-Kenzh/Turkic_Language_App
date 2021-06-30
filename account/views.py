@@ -1,4 +1,4 @@
-
+from django.views.generic import UpdateView
 from rest_framework import status, mixins, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -81,6 +81,10 @@ class UserMe(APIView):
 
     def get(self, request, format=None):
         return Response(self.serializer_class(request.user).data)
+
+    def update(self, request, *args, **kwargs):
+        username = request.user.username
+        return  Response(self.serializer_class(request.user).data)
 
     # def put(self, request, format=None):
     #     serializer = self.serializer_class(data=request.data, context={'request': request})
