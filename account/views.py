@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from account import models, serializers
+# from account import models, serializers
 from account.models import MyUser
 from account.serializers import RegisterSerializer, UserSerializer
 

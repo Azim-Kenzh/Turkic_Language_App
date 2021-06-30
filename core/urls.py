@@ -23,6 +23,7 @@ from rest_framework.routers import DefaultRouter
 from django.conf import settings
 
 from account.views import UserViewSet
+from app import views
 from app.views import CategoryListView, FavoriteViewSet, DescriptionViewSet
 
 router = DefaultRouter()
@@ -54,6 +55,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('', include(router.urls)),
+    path('favorites/category/<int:pk>/', views.description_detail),
 )
 
 if settings.DEBUG:

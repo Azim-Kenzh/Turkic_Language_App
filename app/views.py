@@ -3,6 +3,7 @@ from pprint import pprint
 
 from django.db.models import Exists, OuterRef
 from rest_framework import generics, viewsets, mixins, filters, status
+from rest_framework.decorators import api_view, action, permission_classes
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
@@ -43,7 +44,7 @@ class DescriptionViewSet(PermissionMixin, viewsets.ModelViewSet):
     serializer_class = DescriptionSerializer
     permission_classes = [AllowAny, ]
 
-    """/ api / v1 / descriptions /?word = 1"""
+    """/ api / v1 / descriptions /?category = 1"""
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     filter_class = DescriptionFilter
     search_fields = ['title', ]
@@ -69,8 +70,8 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 
     """/ api / v1 / descriptions /?search = asd.."""
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
-    # filter_class = Favoriteilter
-    search_fields = ['description__title', ]
+    search_fields = ['description__title', 'description__category']
+
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
@@ -94,5 +95,27 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         new_data = []
         for k, v in data.items():
             new_data.append({'category_id': k[0], 'category_title': k[1], 'words': DescriptionInlineSerializer(list(map(lambda x: x.description, v)), many=True).data})
-
         return Response(new_data)
+
+
+    # def retrieve(self, request, *args, **kwargs):
+    #     instance = self.description.category.titl
+    #     serializer = self.get_serializer(instance)
+    #     return Response(serializer.data)
+
+
+"""Вывод """
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, ])
+def description_detail(request, pk):
+
+    try:
+        snippet = Category.objects.get(pk=pk)
+    except Description.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    favorite = Favorite.objects.filter(user=request.user, description__category_id=pk)
+    serializer = DescriptionFavoritesSerializer(list(map(lambda x: x.description, favorite)), many=True, context={'request': request})
+    return Response(serializer.data)
+
+

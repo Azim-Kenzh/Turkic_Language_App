@@ -12,11 +12,6 @@ class DescriptionFilter(FilterSet):
         fields = ('category', )
 
 
-# class FavoriteFilter(FilterSet):
-#     description , category = filters.CharFilter('category')
-#
-#     class Meta:
-#         models = Description
-#         fields = ('category',)
+
 
 

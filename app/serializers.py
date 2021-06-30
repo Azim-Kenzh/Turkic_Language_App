@@ -20,8 +20,9 @@ class DescriptionInlineSerializer(serializers.ModelSerializer):
 
     # def to_representation(self, instance):
     #     representation = super().to_representation(instance)
-    #     # representation['user'] = instance.user.username
-    #     representation['description_id'] = instance.title.id
+    #     a = {}
+    #     a = self.context.get('request').build_absolute_uri(getattr(instance.image).url)
+    #     representation['image'] = a
     #     return representation
 
 
@@ -42,7 +43,7 @@ class DescriptionSerializer(serializers.ModelSerializer):
             a[f'title_{language}'] = getattr(instance, f'title_{language}')
             a[f'image_{language}'] = self.context.get('request').build_absolute_uri(LANGUAGES_FLAGS.get(language)[1])
             a[f'language_{language}'] = LANGUAGES_FLAGS.get(language)[0]
-            a[f'audio_file_{language}'] =self.context.get('request').build_absolute_uri(getattr(instance, f'audio_file_{language}').url) if getattr(instance, f'audio_file_{language}') else None
+            a[f'audio_file_{language}'] = self.context.get('request').build_absolute_uri(getattr(instance, f'audio_file_{language}').url) if getattr(instance, f'audio_file_{language}') else None
             languages_list.append(a)
             # representation[language] = a
         representation['languages'] = languages_list
@@ -55,14 +56,14 @@ class FavoriteSerializer(serializers.ModelSerializer):
         model = Favorite
         fields = ('id', 'favorite', 'description')
 
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        # representation['user'] = instance.user.username
-        representation['category_name'] = instance.description.category.title
-        representation['category_id'] = instance.description.category.id
+    #
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     # representation['user'] = instance.user.username
+    #     representation['category_name'] = instance.description.category.title
+    #     representation['category_id'] = instance.description.category.id
         # representation['words'] = DescriptionInlineSerializer(Favorite.objects.filter(description__category_id=instance.description.category_id).values('description'), many=True, context=self.context).data
-        return representation
+        # return representation
 
 
     def create(self, validated_data):
@@ -76,3 +77,6 @@ class FavoriteSerializer(serializers.ModelSerializer):
             return Favorite.objects.get_or_create(user=user, description=description, favorite=True)[0]
         return favorite
 
+
+class DescriptionFavoritesSerializer(DescriptionSerializer):
+    favorite = serializers.BooleanField(default=True)
