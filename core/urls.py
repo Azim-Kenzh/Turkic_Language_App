@@ -55,7 +55,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('', include(router.urls)),
-    path('favorites/category/<int:pk>/', views.description_detail),
+    path('favorites/category/<int:pk>/', views.description_detail_favorites),
 )
 
 if settings.DEBUG:

@@ -97,7 +97,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
                 data[k] = list(v)
         new_data = []
         for k, v in data.items():
-            new_data.append({'category_id': k[0], 'category_title': k[1], 'words': DescriptionInlineSerializer(list(map(lambda x: x.description, v)), many=True).data})
+            new_data.append({'category_id': k[0], 'category_title': k[1], 'words': DescriptionInlineSerializer(list(map(lambda x: x.description, v)), many=True, context={'request': request}).data})
         return Response(new_data)
 
 
@@ -110,7 +110,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 """Вывод """
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, ])
-def description_detail(request, pk):
+def description_detail_favorites(request, pk):
 
     try:
         snippet = Category.objects.get(pk=pk)
