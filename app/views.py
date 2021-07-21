@@ -5,33 +5,34 @@ from django.db.models import Exists, OuterRef, Q
 from rest_framework import generics, viewsets, mixins, filters, status
 from rest_framework.decorators import api_view, action, permission_classes
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from social_core.pipeline import user
 
+from .permissions import PaymentPermission
 from .serializers import *
 from .filters import DescriptionFilter
 
 
-class PermissionMixin:
-    def get_permissions(self):
-        if self.action == 'create':
-            permissions = [IsAdminUser, ]
-        elif self.action in ['update', 'partial_update', 'delete']:
-            permissions = [IsAdminUser, ]
-        elif self.action == 'get':
-            permissions = [AllowAny, ]
-        else:
-            permissions = []
-        return [perm() for perm in permissions]
+# class PermissionMixin:
+#     def get_permissions(self):
+#         if self.action == 'create':
+#             permissions = [IsAdminUser, ]
+#         elif self.action in ['update', 'partial_update', 'delete']:
+#             permissions = [IsAdminUser, ]
+#         elif self.action == 'get':
+#             permissions = [AllowAny, ]
+#         else:
+#             permissions = []
+#         return [perm() for perm in permissions]
+#
+#     def get_serializer_context(self):
+#         return {'request': self.request, 'action': self.action}
 
-    def get_serializer_context(self):
-        return {'request': self.request, 'action': self.action}
 
-
-class CategoryListView(generics.ListAPIView, viewsets.ModelViewSet):
+class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [AllowAny, ]
@@ -39,10 +40,10 @@ class CategoryListView(generics.ListAPIView, viewsets.ModelViewSet):
     search_fields = ['title', ]
 
 
-class DescriptionViewSet(PermissionMixin, viewsets.ModelViewSet):
+class DescriptionViewSet(viewsets.ModelViewSet):
     queryset = Description.objects.all()
     serializer_class = DescriptionSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [PaymentPermission, ]
 
     """/ api / v1 / descriptions /?category = 1"""
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
@@ -56,9 +57,10 @@ class DescriptionViewSet(PermissionMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = self.filter_queryset(self.queryset)
-        favorites = Favorite.objects.select_related('user', 'description').\
-            filter(user=self.request.user, description_id=OuterRef('pk'))
-        queryset = queryset.annotate(favorite=Exists(favorites))
+        if self.request.user.is_authenticated:
+            favorites = Favorite.objects.select_related('user', 'description').\
+                filter(user=self.request.user, description_id=OuterRef('pk'))
+            queryset = queryset.annotate(favorite=Exists(favorites))
         return queryset
 
 
@@ -70,7 +72,6 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     """/ api / v1 / descriptions /?search = asd.."""
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     search_fields = ['description__title', 'description__category']
-
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
@@ -101,17 +102,10 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         return Response(new_data)
 
 
-    # def retrieve(self, request, *args, **kwargs):
-    #     instance = self.description.category.titl
-    #     serializer = self.get_serializer(instance)
-    #     return Response(serializer.data)
-
-
 """Вывод """
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, ])
 def description_detail_favorites(request, pk):
-
     try:
         snippet = Category.objects.get(pk=pk)
     except Description.DoesNotExist:

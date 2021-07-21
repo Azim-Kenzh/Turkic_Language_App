@@ -18,13 +18,6 @@ class DescriptionInlineSerializer(serializers.ModelSerializer):
         model = Description
         fields = ('id', 'image', 'title', 'favorite')
 
-    # def to_representation(self, instance):
-    #     representation = super().to_representation(instance)
-    #     a = {}
-    #     a = self.context.get('request').build_absolute_uri(getattr(instance.image).url)
-    #     representation['image'] = a
-    #     return representation
-
 
 class DescriptionSerializer(serializers.ModelSerializer):
     favorite = serializers.BooleanField(read_only=True, default=False)

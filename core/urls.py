@@ -28,7 +28,7 @@ from app.views import CategoryListView, FavoriteViewSet, DescriptionViewSet
 
 router = DefaultRouter()
 router.register('users', UserViewSet)
-router.register('category', CategoryListView)
+# router.register('category', CategoryListView)
 router.register('descriptions', DescriptionViewSet)
 router.register('favorites', FavoriteViewSet)
 
@@ -56,6 +56,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('', include(router.urls)),
     path('favorites/category/<int:pk>/', views.description_detail_favorites),
+    path('category/', CategoryListView.as_view()),
 )
 
 if settings.DEBUG:

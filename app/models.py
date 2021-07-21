@@ -11,6 +11,7 @@ class Category(models.Model):
 
     image = models.ImageField(upload_to='category', blank=True, null=True)
     title = models.CharField(max_length=200, verbose_name='Слово', null='', blank='')
+    is_free = models.BooleanField(default=False, verbose_name='Бесплатный')
 
     def __str__(self):
         return self.title

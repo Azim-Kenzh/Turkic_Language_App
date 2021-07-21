@@ -5,7 +5,7 @@ from .models import *
 @admin.register(Category)
 class CategoryAdmin(TranslationAdmin):
     exclude = ('title_ru', )
-    list_display = ('id', 'title')
+    list_display = ('id', 'title', 'is_free')
     search_fields = ('title',)
     ordering = ('title',)
 
@@ -36,9 +36,6 @@ class DescriptionAdmin(TranslationAdmin):
               ('title_crh', 'audio_file_crh'),
               ('title_alt', 'audio_file_alt'),
             ]
-
-
-
 
 
 @admin.register(Favorite)
