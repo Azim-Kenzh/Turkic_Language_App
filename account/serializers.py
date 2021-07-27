@@ -1,13 +1,6 @@
-import self
-from django.contrib.auth import authenticate
-from django.contrib.sitemaps.views import index
-from django.db.models import Count
 from rest_framework import serializers
-from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from account.models import *
-from app.models import Favorite
-from app.serializers import FavoriteSerializer
 
 
 class RegisterSerializer(serializers.ModelSerializer):
