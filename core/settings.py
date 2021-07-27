@@ -345,12 +345,3 @@ JET_THEMES = [
 #
 # SOCIAL_AUTH_FACEBOOK_KEY = '548199803012414'
 # SOCIAL_AUTH_FACEBOOK_SECRET = '108b27e1dd72d39437b80b7c70e7eae7'
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'social_django.context_processors.backends',
-    'social_django.context_processors.login_redirect',
-)
-
-
-SOCIAL_AUTH_GOOGLE_OAUTH_KEY = ''
-SOCIAL_AUTH_GOOGLE_OAUTH_SECRET = ''
