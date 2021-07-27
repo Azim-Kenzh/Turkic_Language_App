@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'djoser',
     'django_filters',
 
+    'oauth2_provider',
+    'social_django',
+    'rest_framework_social_oauth2',
+
     'account',
     'app',
 ]
@@ -79,6 +83,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -138,12 +144,6 @@ USE_TZ = True
 gettext = lambda s: s
 
 EXTRA_LANG_INFO = {
-    'ky': {
-        'bidi': False,
-        'code': 'ky',
-        'name': 'Kyrgyz',
-        'name_local': 'Кыргыз тили',
-    },
     'ug': {
         'bidi': False,
         'code': 'ug',
@@ -203,18 +203,6 @@ EXTRA_LANG_INFO = {
         'code': 'ksk',
         'name': 'Kashkay',
         'name_local': 'Kashkay',
-    },
-    'uz': {
-        'bidi': False,
-        'code': 'uz',
-        'name': 'Uzbek',
-        'name_local': "O'zbek tili",
-    },
-    'tk': {
-        'bidi': False,
-        'code': 'tk',
-        'name': 'Turkmen',
-        'name_local': 'Türkmen dili',  # unicode codepoints here
     },
 }
 
@@ -279,8 +267,6 @@ LOCALE_PATHS = (
 )
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -355,11 +341,16 @@ JET_THEMES = [
 #     }
 # }
 
-JET_SIDE_MENU_COMPACT = True
-JET_CHANGE_FORM_SIBLING_LINKS = True
-JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
-JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
 
 #
 # SOCIAL_AUTH_FACEBOOK_KEY = '548199803012414'
 # SOCIAL_AUTH_FACEBOOK_SECRET = '108b27e1dd72d39437b80b7c70e7eae7'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'social_django.context_processors.backends',
+    'social_django.context_processors.login_redirect',
+)
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH_SECRET = ''

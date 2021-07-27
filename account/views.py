@@ -8,6 +8,8 @@ from rest_framework.views import APIView
 
 from account.models import MyUser
 from account.serializers import RegisterSerializer, UserSerializer, UserUpdateSerializer
+from app.models import Favorite
+from app.serializers import FavoriteSerializer
 
 
 class RegisterView(APIView):
@@ -72,7 +74,7 @@ class UserViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.Destr
 
 
 class UserMe(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
     serializer_class = UserSerializer
 
     def get(self, request, format=None):
@@ -95,3 +97,4 @@ class UserMe(APIView):
     #     serializer.is_valid(raise_exception=True)
     #     user = serializer.validated_data['user']
     #     return Response(user.username)
+

@@ -25,7 +25,7 @@ class Description(models.Model):
     image = models.ImageField(upload_to='description', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     title = models.CharField(max_length=200)
-    audio_file = models.FileField(upload_to='mp3')
+    audio_file = models.FileField(upload_to='mp3', blank=True, null=True)
 
     def __str__(self):
         return self.title

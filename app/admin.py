@@ -13,7 +13,7 @@ class CategoryAdmin(TranslationAdmin):
 
 @admin.register(Description)
 class DescriptionAdmin(TranslationAdmin):
-    list_display = ('id', 'title', 'audio_file')
+    list_display = ('id', 'title', 'audio_file', 'category')
     search_fields = ('title', )
     ordering = ('title', )
 
