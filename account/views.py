@@ -33,6 +33,7 @@ class LoginView(ObtainAuthToken):
             'user_id': user.pk,
             'username': user.username,
             'email': user.email,
+            'is_premium': user.is_premium(),
         })
 
     # def post(self, request):
