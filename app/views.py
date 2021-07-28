@@ -33,17 +33,19 @@ from .filters import DescriptionFilter
 
 
 class CategoryListView(generics.ListAPIView):
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().order_by('-is_free')
     serializer_class = CategorySerializer
     permission_classes = [AllowAny, ]
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     search_fields = ['title', ]
 
 
+
 class DescriptionViewSet(viewsets.ModelViewSet):
     queryset = Description.objects.all()
     serializer_class = DescriptionSerializer
     permission_classes = [PaymentPermission, ]
+
 
     """/ api / v1 / descriptions /?category = 1"""
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)

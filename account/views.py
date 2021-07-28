@@ -2,14 +2,13 @@ from django.views.generic import UpdateView
 from rest_framework import status, mixins, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from account.models import MyUser
 from account.serializers import RegisterSerializer, UserSerializer, UserUpdateSerializer
-from app.models import Favorite
-from app.serializers import FavoriteSerializer
+
 
 
 class RegisterView(APIView):
@@ -74,7 +73,7 @@ class UserViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.Destr
 
 
 class UserMe(APIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = [IsAuthenticated, ]
     serializer_class = UserSerializer
 
     def get(self, request, format=None):
@@ -89,8 +88,13 @@ class UserMe(APIView):
         serializer = UserUpdateSerializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-
+        serialized = UserSerializer(data=request.DATA)
+        if serialized.is_valid():
+            serialized.save()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
         return Response(self.serializer_class(request.user, context={"request": request}).data)
+
+
 
     # def put(self, request, format=None):
     #     serializer = self.serializer_class(data=request.data, context={'request': request})

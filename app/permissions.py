@@ -13,7 +13,7 @@ class PaymentPermission(BasePermission):
         category = Category.objects.filter(id=category_id).first()
         if category and category.is_free:
             return True
-        return False
+        return request.user.is_premium()
 
     def has_object_permission(self, request, view, obj):
         return obj.category.is_free
