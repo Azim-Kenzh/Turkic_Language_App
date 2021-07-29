@@ -1,35 +1,15 @@
 from itertools import groupby
-from pprint import pprint
+from django.db.models import Exists, OuterRef
+from rest_framework import generics, viewsets, filters, status
+from rest_framework.decorators import api_view, permission_classes
 
-from django.db.models import Exists, OuterRef, Q
-from rest_framework import generics, viewsets, mixins, filters, status
-from rest_framework.decorators import api_view, action, permission_classes
-from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from social_core.pipeline import user
 
 from .permissions import PaymentPermission
 from .serializers import *
 from .filters import DescriptionFilter
-
-
-# class PermissionMixin:
-#     def get_permissions(self):
-#         if self.action == 'create':
-#             permissions = [IsAdminUser, ]
-#         elif self.action in ['update', 'partial_update', 'delete']:
-#             permissions = [IsAdminUser, ]
-#         elif self.action == 'get':
-#             permissions = [AllowAny, ]
-#         else:
-#             permissions = []
-#         return [perm() for perm in permissions]
-#
-#     def get_serializer_context(self):
-#         return {'request': self.request, 'action': self.action}
 
 
 class CategoryListView(generics.ListAPIView):
@@ -40,12 +20,10 @@ class CategoryListView(generics.ListAPIView):
     search_fields = ['title', ]
 
 
-
 class DescriptionViewSet(viewsets.ModelViewSet):
     queryset = Description.objects.all()
     serializer_class = DescriptionSerializer
     permission_classes = [PaymentPermission, ]
-
 
     """/ api / v1 / descriptions /?category = 1"""
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
@@ -92,7 +70,6 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         queryset = list(queryset)
         grouped_iterator = groupby(queryset, lambda x: (x.description.category_id, x.description.category.title))
         data = {}
-
         for k, v in grouped_iterator:
             if data.get(k, None):
                 data[k].append(*list(v))

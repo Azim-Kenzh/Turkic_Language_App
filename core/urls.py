@@ -28,9 +28,9 @@ from app.views import CategoryListView, FavoriteViewSet, DescriptionViewSet
 
 router = DefaultRouter()
 router.register('users', UserViewSet)
-# router.register('category', CategoryListView)
 router.register('descriptions', DescriptionViewSet)
 router.register('favorites', FavoriteViewSet)
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -40,7 +40,6 @@ schema_view = get_schema_view(
     ),
     public=True,
 )
-
 
 
 urlpatterns = [

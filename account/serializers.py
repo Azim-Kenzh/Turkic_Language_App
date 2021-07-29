@@ -1,8 +1,6 @@
-import django.contrib.auth.password_validation as validators
 from rest_framework import serializers
 
 from account.models import *
-from app.models import Favorite
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -47,26 +45,11 @@ class UserSerializer(serializers.ModelSerializer):
             representation['favorite_words'] = instance.favorites.count()
         return representation
 
-    # def update(self, instance, validated_data):
-    #     instance.username = validated_data.get('username', instance.username,)
-    #     print('instance of username', instance.username)
-    #     return instance
-
 
 class UserUpdateSerializer(serializers.ModelSerializer):
-    # favorites = FavoriteSerializer(many=True)
 
     class Meta:
         model = MyUser
         fields = ('image', 'username')
 
-
-
-
-# class UserResetPasswordSerializer(serializers.ModelSerializer):
-#     password = serializers.CharField(source='user.password',  max_length=20, min_length=6)
-#     new_password = serializers.CharField(style={'input_type': 'password'}, max_length=20, min_length=)
-#     class Meta:
-#         model = MyUser
-#         fields =("password", 'new_password')
 

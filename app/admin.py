@@ -1,6 +1,7 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin, TabbedTranslationAdmin, TranslationInlineModelAdmin
+from modeltranslation.admin import TranslationAdmin
 from .models import *
+
 
 @admin.register(Category)
 class CategoryAdmin(TranslationAdmin):
@@ -8,7 +9,6 @@ class CategoryAdmin(TranslationAdmin):
     list_display = ('id', 'title', 'is_free')
     search_fields = ('title',)
     ordering = ('title',)
-
 
 
 @admin.register(Description)

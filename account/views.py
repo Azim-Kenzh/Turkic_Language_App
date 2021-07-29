@@ -1,4 +1,3 @@
-from django.views.generic import UpdateView
 from rest_framework import status, mixins, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -10,7 +9,6 @@ from account.models import MyUser
 from account.serializers import RegisterSerializer, UserSerializer, UserUpdateSerializer
 
 
-
 class RegisterView(APIView):
 
     def post(self, request):
@@ -19,7 +17,6 @@ class RegisterView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response('Вы успешно зарегистрировались!', status=status.HTTP_201_CREATED)
-
 
 class LoginView(ObtainAuthToken):
 
@@ -35,15 +32,6 @@ class LoginView(ObtainAuthToken):
             'email': user.email,
             'is_premium': user.is_premium(),
         })
-
-    # def post(self, request):
-    #     serializer = serializers.LoginSerializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     username = serializer.validated_data['username']
-    #     info = models.User.objects.get(username=username)
-    #     serializer1 = serializers.UserSerializer(info, many=True)
-    #     token, created = Token.objects.get_or_create(username=username)
-    #     return Response({"token": token.key, 'data': serializer1.data}, status=200)
 
 
 class LogoutView(APIView):
@@ -80,10 +68,6 @@ class UserMe(APIView):
     def get(self, request, format=None):
         return Response(self.serializer_class(request.user, context={"request": request}).data)
 
-    # def update(self, request, *args, **kwargs):
-    #     username = request.user.username
-    #     return Response(self.serializer_class(request.user).data)
-
     def patch(self, request, *args, **kwargs):
         instance = self.request.user
         serializer = UserUpdateSerializer(instance, data=request.data, partial=True)
@@ -94,12 +78,3 @@ class UserMe(APIView):
             serialized.save()
             return Response(status=status.HTTP_205_RESET_CONTENT)
         return Response(self.serializer_class(request.user, context={"request": request}).data)
-
-
-
-    # def put(self, request, format=None):
-    #     serializer = self.serializer_class(data=request.data, context={'request': request})
-    #     serializer.is_valid(raise_exception=True)
-    #     user = serializer.validated_data['user']
-    #     return Response(user.username)
-

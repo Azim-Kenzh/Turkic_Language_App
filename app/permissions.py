@@ -4,9 +4,6 @@ from app.models import Category
 
 
 class PaymentPermission(BasePermission):
-    """
-    Allows access only to authenticated users.
-    """
 
     def has_permission(self, request, view):
         category_id = request.query_params.get('category')
