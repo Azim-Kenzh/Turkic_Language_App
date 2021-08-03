@@ -73,7 +73,7 @@ class UserMe(APIView):
         serializer = UserUpdateSerializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        serialized = UserSerializer(data=request.DATA)
+        serialized = UserSerializer(data=request.data)
         if serialized.is_valid():
             serialized.save()
             return Response(status=status.HTTP_205_RESET_CONTENT)
