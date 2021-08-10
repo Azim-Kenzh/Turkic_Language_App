@@ -49,6 +49,7 @@ urlpatterns = [
     path('docs/', schema_view.with_ui()),
     path('i18n/', include('django.conf.urls.i18n')),
     path('accounts/', include("account.urls")),
+    path('auth/', include('rest_framework_social_oauth2.urls')),
 ]
 
 
